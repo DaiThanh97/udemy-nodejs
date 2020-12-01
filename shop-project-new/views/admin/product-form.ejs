@@ -1,0 +1,22 @@
+<form action="/admin/save" method="POST">
+    <div class="form-group">
+        <label for="usr">Title</label>
+        <input type="text" class="form-control" name="title" value="<%- product.title ? product.title : ''%>">
+    </div>
+    <div class="form-group">
+        <label for="pwd">Image URL</label>
+        <input type="text" class="form-control" name="imageUrl" value="<%- product.imageUrl ? product.imageUrl : '' %>">
+    </div>
+    <div class="form-group">
+        <label for="pwd">Price</label>
+        <input type="number" class="form-control" name="price" value="<%- product.price ? product.price : '' %>">
+    </div>
+    <div class="form-group">
+        <label for="description">Desciption</label>
+        <textarea class="form-control" rows="5"
+            name="description"><%- product.description ? product.description : '' %></textarea>
+    </div>
+    <input class="d-none" type="text" name="_id" value="<%- product._id ? product._id : '' %>">
+    <input type="text" class="d-none" value="<%- csrfToken %>" name="_csrf">
+    <button type="submit" class="btn btn-outline-info">Submit</button>
+</form>

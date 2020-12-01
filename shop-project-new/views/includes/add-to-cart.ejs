@@ -1,0 +1,8 @@
+<% 
+    renderButtonAddCart = (productId) => {
+        if (!isAuthenticated)
+            return;
+
+        return `<a href='/cart/${productId}' class="btn btn-outline-primary">Add to Cart</a>`;
+    };
+%>

@@ -1,0 +1,27 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark justify-content-between">
+    <div class="navbar-nav">
+        <a class="nav-item nav-link <%-path === '/' ? 'active' : ''%>" href="/">Shop</a>
+        <a class="nav-item nav-link <%-path === '/products' ? 'active' : ''%>" href="/products">Products</a>
+        <% if (isAuthenticated) { %>
+        <a class="nav-item nav-link <%-path === '/cart' ? 'active' : ''%>" href="/cart">Cart</a>
+        <a class="nav-item nav-link" href="#">Orders</a>
+        <a class="nav-item nav-link <%-path === '/admin/product-form' ? 'active' : ''%>" href="/admin/product-form">
+            Product Form
+        </a>
+        <a class="nav-item nav-link <%-path === '/admin/products' ? 'active' : ''%>" href="/admin/products">
+            Admin Products
+        </a>
+        <% } %>
+    </div>
+    <div class="navbar-nav">
+        <% if (!isAuthenticated) { %>
+        <a href="/login" class="btn btn-outline-info mr-2">Log In</a>
+        <a href="/signup" class="btn btn-outline-warning mr-2">Sign Up</a>
+        <% } else { %>
+        <form action="/logout" method="POST">
+            <input type="text" class="d-none" value="<%- csrfToken %>" name="_csrf">
+            <button class="btn btn-outline-danger" type="submit">Log Out</button>
+        </form>
+        <% } %>
+    </div>
+</nav>

@@ -1,0 +1,19 @@
+<% 
+    showError = () => {
+        let error = '';
+        if (errorMessage) {
+            error = `<div class="text-danger font-weight-bold text-center">${errorMessage}</div>`;
+        }
+        return error;
+    }
+%>
+
+<%- showError() %>
+<form action="/reset" method="POST">
+    <div class="form-group">
+        <label for="usr">E-Mail</label>
+        <input type="text" class="form-control" name="email" value="">
+    </div>
+    <input type="text" class="d-none" value="<%- csrfToken %>" name="_csrf">
+    <button type="submit" class="btn btn-outline-info">Reset Password</button>
+</form>

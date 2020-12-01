@@ -1,0 +1,9 @@
+<% include ./../includes/add-to-cart %>
+<div class="text-center">
+    <h1><%- product.title %></h1>
+    <hr>
+    <img src="<%-product.imageUrl%>" alt="Card image" style="width:30%">
+    <h3 class="text-center">$<%-product.price%></h3>
+    <p class="card-text text-center"><%-product.description%></p>
+    <%- renderButtonAddCart(product._id) %>
+</div>

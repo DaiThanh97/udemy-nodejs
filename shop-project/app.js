@@ -13,12 +13,13 @@ const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
 const flash = require('connect-flash');
+const multer = require('multer');
 
 // Define Self
 const shopRouter = require('./routes/shop');
 const adminRouter = require('./routes/admin');
 const authRouter = require('./routes/auth');
-const configs = require('./configs/db');
+const configs = require('./configs/config');
 const UserModel = require('./models/user');
 
 const app = express();
@@ -47,7 +48,9 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('(/public)?', express.static(path.join(__dirname, 'public')));
+// Init multer
+app.use(multer({ storage: configs.MULTER_DISK_STORAGE, fileFilter: configs.MULTER_FILE_FILTER }).single('image'));
 // Init session middleware
 app.use(session({
 	secret: process.env.SESSION_SECRET_KEY,
@@ -75,10 +78,15 @@ app.use((req, res, next) => {
 	}
 	UserModel.findById(req.session.user._id)
 		.then(user => {
+			if (!user) {
+				return next();
+			}
 			req.user = user;
 			next();
 		})
-		.catch(err => console.log(err));
+		.catch(err => {
+			next(new Error(err));
+		});
 })
 
 // Backend admin

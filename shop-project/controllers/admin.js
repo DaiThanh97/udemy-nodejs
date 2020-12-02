@@ -11,7 +11,11 @@ getProductForm = (req, res, next) => {
                     product: result,
                 });
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                const error = new Error(err);
+                error.httpStatusCode = 500;
+                return next(err);
+            });
     }
     else {
         res.render('admin/product-form', {
@@ -24,13 +28,23 @@ getProductForm = (req, res, next) => {
 
 saveProduct = (req, res, next) => {
     const { _id: productId, ...product } = req.body;
+    const image = req.file;
+    if (!image) {
+        return next(new Error('Image Invalid!'));
+    }
+
+    product.imageUrl = image.path;
     if (productId) {
         ProductModel.findByIdAndUpdate(productId, product)
             .lean()
             .then(result => {
                 res.redirect('/admin/products');
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                const error = new Error(err);
+                error.httpStatusCode = 500;
+                return next(err);
+            });
     }
     else {
         product.userId = req.session.user._id;
@@ -39,7 +53,11 @@ saveProduct = (req, res, next) => {
             .then(result => {
                 res.redirect('/admin/products');
             })
-            .catch(err => console.log(err));
+            .catch(err => {
+                const error = new Error(err);
+                error.httpStatusCode = 500;
+                return next(err);
+            });
     }
 }
 
@@ -53,7 +71,11 @@ getProducts = (req, res, next) => {
                 path: '/admin/products',
             });
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(err);
+        });
 }
 
 deleteProduct = (req, res, next) => {
@@ -63,7 +85,11 @@ deleteProduct = (req, res, next) => {
         .then(result => {
             res.redirect('/admin/products');
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            const error = new Error(err);
+            error.httpStatusCode = 500;
+            return next(err);
+        });
 }
 
 module.exports = {

@@ -1,12 +1,13 @@
-<form action="/admin/save" method="POST">
+<form action="/admin/save" method="POST" enctype="multipart/form-data">
     <div class="form-group">
         <label for="usr">Title</label>
         <input type="text" class="form-control" name="title" value="<%- product.title ? product.title : ''%>">
     </div>
     <div class="form-group">
-        <label for="pwd">Image URL</label>
-        <input type="text" class="form-control" name="imageUrl" value="<%- product.imageUrl ? product.imageUrl : '' %>">
+        <p>Custom file:</p>
+        <input type="file" id="myFile" name="image" value="<%- product.imageUrl ? product.imageUrl : ''%>">
     </div>
+
     <div class="form-group">
         <label for="pwd">Price</label>
         <input type="number" class="form-control" name="price" value="<%- product.price ? product.price : '' %>">

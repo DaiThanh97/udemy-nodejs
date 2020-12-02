@@ -50,7 +50,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('(/public)?', express.static(path.join(__dirname, 'public')));
 // Init multer
-app.use(multer({ storage: configs.MULTER_DISK_STORAGE, fileFilter: configs.MULTER_FILE_FILTER }).single('image'));
+app.use(multer({
+	storage: configs.MULTER_DISK_STORAGE,
+	fileFilter: configs.MULTER_FILE_FILTER
+}).single('image'));
 // Init session middleware
 app.use(session({
 	secret: process.env.SESSION_SECRET_KEY,

@@ -1,0 +1,30 @@
+<% 
+    let xhtml = '';
+    orders.forEach(item => {
+        const {_id, products} = item;
+
+        let xhtmlProducts = '';
+        products.forEach(prod => {
+            const {product, quantity} = prod;
+            xhtmlProducts += `<div class="d-flex justify-content-between align-items-center">
+                                <h5>${product.title} (${quantity})</h5>
+                                <a href='/order/${_id}' class="btn btn-outline-info">Invoice</a>
+                            </div>`;
+        })
+
+        xhtml += `<div class="col-12">
+                        <div class="card">
+                            <div class="card-header">
+                                Order - #${_id}    
+                            </div>
+                            <div class="card-body">
+                                ${xhtmlProducts}
+                            </div>
+                        </div>
+                    </div>`;
+    });
+%>
+
+<div class="row">
+    <%- xhtml %>
+</div>

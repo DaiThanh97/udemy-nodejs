@@ -4,7 +4,7 @@
         <a class="nav-item nav-link <%-path === '/products' ? 'active' : ''%>" href="/products">Products</a>
         <% if (isAuthenticated) { %>
         <a class="nav-item nav-link <%-path === '/cart' ? 'active' : ''%>" href="/cart">Cart</a>
-        <a class="nav-item nav-link" href="#">Orders</a>
+        <a class="nav-item nav-link <%-path === '/order' ? 'active' : ''%>" href="/order">Orders</a>
         <a class="nav-item nav-link <%-path === '/admin/product-form' ? 'active' : ''%>" href="/admin/product-form">
             Product Form
         </a>

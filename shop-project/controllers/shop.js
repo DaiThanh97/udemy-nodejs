@@ -1,3 +1,6 @@
+const fs = require('fs');
+const path = require('path');
+
 const ProductModel = require('./../models/product');
 const OrderModel = require('./../models/order');
 
@@ -104,9 +107,39 @@ postOrder = (req, res, next) => {
             return req.user.clearCart();
         })
         .then(() => {
-            res.redirect('/orders');
+            res.redirect('/order');
         })
         .catch(err => console.log(err));
+}
+
+getOrder = (req, res, next) => {
+    OrderModel.find({ 'user.userId': req.user._id }, { user: 0 })
+        .lean()
+        .then(result => {
+            res.render('shop/order', {
+                path: '/order',
+                title: 'Orders',
+                orders: result
+            })
+        })
+        .catch(err => console.log(err));
+}
+
+getInvoice = (req, res, next) => {
+    const { orderId } = req.params;
+    const invoiceName = `invoice-${orderId}.txt`;
+    const invoicePath = path.join('private', 'invoices', invoiceName);
+
+    console.log(invoicePath);
+
+    fs.readFile(invoicePath, (err, data) => {
+        if (err) {
+            return next(err);
+        }
+        res.setHeader('Content-Type', 'text/plain');
+        res.setHeader('Content-Disposition', `attachment; filename=${invoiceName}`);
+        res.send(data);
+    })
 }
 
 module.exports = {
@@ -115,5 +148,7 @@ module.exports = {
     getProduct,
     getCart,
     deleteCart,
-    postOrder
+    postOrder,
+    getOrder,
+    getInvoice
 }

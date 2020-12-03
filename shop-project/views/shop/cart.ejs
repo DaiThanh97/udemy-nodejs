@@ -7,7 +7,10 @@
                             <div class="card-body d-flex justify-content-between">
                                 <h4>${product.title}</h4>
                                 <h4>Quantity: ${item.quantity}</h4>
-                                <a href="/delete-cart/${product._id}" class="btn btn-outline-danger">Delete</a>
+                                <div>
+                                    <a href="/" class="btn btn-outline-info">Invoice</a>
+                                    <a href="/delete-cart/${product._id}" class="btn btn-outline-danger">Delete</a>
+                                </div>
                             </div>
                         </div>
                     </div>`;
@@ -19,7 +22,7 @@
 </div>
 <hr>
 <div class="mt-4 text-center">
-    <form action="/order" method="post">
+    <form action="/create-order" method="post">
         <input type="text" class="d-none" value="<%- csrfToken %>" name="_csrf">
         <button type="submit" class="btn btn-outline-info ">Order Now!</button>
     </form>

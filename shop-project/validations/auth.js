@@ -23,11 +23,8 @@ validateSignUp = () => {
             .trim(),
         body('confirmPassword')
             .custom((value, { req }) => {
-                if (value !== req.body.password) {
-                    throw new Error('Passwords have to match!');
-                }
-                return true;
-            })
+                return value === req.body.password;
+            }).withMessage('Have to match')
             .trim()
     ];
 }

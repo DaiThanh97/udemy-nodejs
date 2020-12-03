@@ -22,8 +22,9 @@
 </div>
 <hr>
 <div class="mt-4 text-center">
-    <form action="/create-order" method="post">
-        <input type="text" class="d-none" value="<%- csrfToken %>" name="_csrf">
+    <!-- <form action="/checkout" method="GET">
+        <input type="text" class="d-none" value="<%# csrfToken %>" name="_csrf">
         <button type="submit" class="btn btn-outline-info ">Order Now!</button>
-    </form>
+    </form> -->
+    <a href="/checkout" class="btn btn-outline-info">Order Now</a>
 </div>

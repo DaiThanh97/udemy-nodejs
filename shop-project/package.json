@@ -9,6 +9,7 @@
     "bcryptjs": "^2.4.3",
     "connect-flash": "^0.1.1",
     "connect-mongodb-session": "^2.4.1",
+    "connect-redis": "^5.0.0",
     "cookie-parser": "~1.4.4",
     "csurf": "^1.11.0",
     "debug": "~2.6.9",
@@ -25,6 +26,7 @@
     "nodemailer": "^6.4.16",
     "nodemailer-sendgrid-transport": "^0.2.0",
     "pdfkit": "^0.11.0",
+    "redis": "^3.0.2",
     "stripe": "^8.126.0"
   }
 }

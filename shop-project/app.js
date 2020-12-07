@@ -14,6 +14,16 @@ const MongoDBStore = require('connect-mongodb-session')(session);
 const csrf = require('csurf');
 const flash = require('connect-flash');
 const multer = require('multer');
+const redis = require('redis');
+const RedisStore = require('connect-redis')(session);
+const redisClient = redis.createClient(
+	process.env.REDIS_PORT,
+	process.env.REDIS_HOST,
+	{
+		auth_pass: process.env.REDIS_PASS,
+		db: process.env.REDIS_DB_SESSION
+	}
+);
 
 // Define Self
 const shopRouter = require('./routes/shop');
@@ -59,15 +69,17 @@ app.use(session({
 	secret: process.env.SESSION_SECRET_KEY,
 	resave: false,
 	saveUninitialized: false,
-	store: new MongoDBStore({
-		uri: configs.DB_CONNECT_STR,
-		collection: 'sessions',
-	}),
+	// store: new MongoDBStore({
+	// 	uri: configs.DB_CONNECT_STR,
+	// 	collection: 'sessions',
+	// }),
+	store: new RedisStore({ client: redisClient }),
 }));
 // Init csrf middleware
 app.use(csrf());
 // Init flash middleware
 app.use(flash());
+
 
 app.use((req, res, next) => {
 	res.locals.isAuthenticated = req.session.isLoggedIn;

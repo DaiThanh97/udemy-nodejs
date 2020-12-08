@@ -6,15 +6,15 @@ const UserModel = require('./../models/user');
 
 signUp = async (req, res, next) => {
     const { errors } = validationResult(req);
-    if (errors.length > 0) {
-        const error = new Error("Validation Failed!");
-        error.status = 422;
-        error.data = errors;
-        throw error;
-    }
-
-    const { email, name, password } = req.body;
     try {
+        if (errors.length > 0) {
+            const error = new Error("Validation Failed!");
+            error.status = 422;
+            error.data = errors;
+            throw error;
+        }
+
+        const { email, name, password } = req.body;
         const passwordHash = await bcypt.hash(password, 12);
         const user = new UserModel({
             email,

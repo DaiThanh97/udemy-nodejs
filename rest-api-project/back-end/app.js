@@ -1,6 +1,6 @@
 const path = require('path');
 const fs = require('fs');
-const https = require('https');
+// const https = require('https');
 
 require('dotenv').config();
 const express = require('express');
@@ -43,23 +43,16 @@ app.use((req, res, next) => {
     next();
 });
 // Init multer
+// const upload = multer({ storage: configs.MULTER_CONFIG, fileFilter: configs.MULTER_FILE_FILTER });
 app.use(multer({ storage: configs.MULTER_CONFIG, fileFilter: configs.MULTER_FILE_FILTER }).single('image'));
 
 // Router
 app.use('/feed', feedRouter);
 app.use('/auth', authRouter);
 
-// Error Handler
-app.use((err, req, res, next) => {
-    const status = err.status || 500;
-    const { message, data } = err;
-    res.status(status).json({ message, data });
-});
-
 
 // CONNECT DB
-mongoose.set('useFindAndModify', false);
-mongoose.connect(configs.DB_CONNECT_STR, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(configs.DB_CONNECT_STR, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
     .then(result => {
         console.log('CONNECT DB SUCCESS!');
 
@@ -75,7 +68,15 @@ mongoose.connect(configs.DB_CONNECT_STR, { useNewUrlParser: true, useUnifiedTopo
             io.emit('hello', 'bye');
         });
     })
-    .catch(err => next(err));
+    .catch(err => console.log(err));
+
+// Error Handler
+app.use((err, req, res, next) => {
+    const status = err.status || 500;
+    const { message, data } = err;
+    res.status(status).json({ message, data });
+});
+
 
 // app.listen(port) ~~ const server = http.createServer(app);
 //               server.listen(port);

@@ -24,6 +24,8 @@ module.exports = (req, res, next) => {
         throw error;
     }
 
+    /// CHECK IF ID IS VALID TO A USER IN DB
+
     req.userId = decodedToken.userId;
     next();
 };

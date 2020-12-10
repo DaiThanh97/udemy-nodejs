@@ -37,7 +37,7 @@ class Feed extends Component {
         //     .catch(this.catchError);
 
         this.loadPosts();
-        const socketClient = openSocket('http://localhost:8080');
+        const socketClient = openSocket('https://udemy-train-nodejs.herokuapp.com/');
         socketClient.on('hello', data => {
             console.log(data);
         })
@@ -97,7 +97,7 @@ class Feed extends Component {
             page--;
             this.setState({ postPage: page });
         }
-        axios.get('http://localhost:8080/feed/posts?page=' + page, {
+        axios.get('https://udemy-train-nodejs.herokuapp.com//feed/posts?page=' + page, {
             headers: {
                 Authorization: 'Bearer ' + this.props.token
             }
@@ -167,10 +167,10 @@ class Feed extends Component {
         formData.append('content', postData.content);
         formData.append('image', postData.image);
         console.log(postData);
-        let url = 'http://localhost:8080/feed/create';
+        let url = 'https://udemy-train-nodejs.herokuapp.com//feed/create';
         let method = 'POST';
         if (this.state.editPost) {
-            url = 'http://localhost:8080/feed/post/' + this.state.editPost._id;
+            url = 'https://udemy-train-nodejs.herokuapp.com//feed/post/' + this.state.editPost._id;
             method = 'PUT';
         }
 
@@ -222,7 +222,7 @@ class Feed extends Component {
 
     deletePostHandler = postId => {
         this.setState({ postsLoading: true });
-        axios.delete('http://localhost:8080/feed/post/' + postId, {
+        axios.delete('https://udemy-train-nodejs.herokuapp.com//feed/post/' + postId, {
             headers: {
                 Authorization: 'Bearer ' + this.props.token
             }

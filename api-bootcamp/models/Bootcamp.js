@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
 const slugify = require('slugify');
 
+const geocoder = require('./../utils/geocoder');
+
 const BootcampSchema = new mongoose.Schema({
     name: {
         type: String,
@@ -45,7 +47,7 @@ const BootcampSchema = new mongoose.Schema({
         },
         coordinates: {
             type: [Number],
-            index: '2dsphere'
+            index: '2dsphere',
         },
         formattedAddress: String,
         street: String,
@@ -96,17 +98,33 @@ const BootcampSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
-    },
-    // user: {
-    //     type: mongoose.Schema.ObjectId,
-    //     ref: 'User',
-    //     required: true
-    // }
+    }
 });
 
 // Create bootcamp slug from name
+// pre() is a Mongoose Middleware
+// this function wil call before document saved into DB 
 BootcampSchema.pre('save', function (next) {
     this.slug = slugify(this.name, { lower: true });
+    next();
+});
+
+// Geocode & create location field
+BootcampSchema.pre('save', async function (next) {
+    const resLocate = await geocoder.geocode(this.address);
+    this.location = {
+        type: 'Point',
+        coordinates: [resLocate[0].longitude, resLocate[0].latitude],
+        formattedAddress: resLocate[0].formattedAddress,
+        street: resLocate[0].streetName,
+        city: resLocate[0].city,
+        state: resLocate[0].stateCode,
+        zipcode: resLocate[0].zipcode,
+        country: resLocate[0].countryCode
+    };
+
+    // Dont save address raw in DB cuz formattedAddress is already saved in location
+    this.address = undefined;
     next();
 });
 

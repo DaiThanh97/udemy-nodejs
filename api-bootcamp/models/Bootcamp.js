@@ -11,7 +11,7 @@ const BootcampSchema = new mongoose.Schema({
         trim: true,
         maxlength: [50, 'Name can not be more than 50 characters'],
     },
-    slug: String, // Devcentral Bootcamp          devcentral-bootcamp
+    slug: String,
     description: {
         type: String,
         required: [true, 'Please add a description'],
@@ -99,6 +99,9 @@ const BootcampSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     }
+}, {
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
 });
 
 // Create bootcamp slug from name
@@ -126,6 +129,20 @@ BootcampSchema.pre('save', async function (next) {
     // Dont save address raw in DB cuz formattedAddress is already saved in location
     this.address = undefined;
     next();
+});
+
+// Cascade delete
+BootcampSchema.pre('remove', async function (next) {
+    await this.model('Course').deleteMany({ bootcamp: this._id });
+    next();
+});
+
+// Reverse populate with virtuals
+BootcampSchema.virtual('courses', {
+    ref: 'Course',
+    localField: '_id',
+    foreignField: 'bootcamp',
+    justOne: false
 });
 
 module.exports = mongoose.model('Bootcamp', BootcampSchema);

@@ -12,7 +12,7 @@ exports.getBootcamps = async (req, res, next) => {
     queryStr = queryStr.replace(/\b(gt|gte|lt|lte|in)\b/g, x => `$${x}`);
 
     // Not execute YET
-    let query = BootcampModel.find(JSON.parse(queryStr));
+    let query = BootcampModel.find(JSON.parse(queryStr)).populate('courses');
 
     if (select) {
         select = select.replace(/,/g, ' ');
@@ -104,11 +104,12 @@ exports.editBootcamp = async (req, res, next) => {
 //  @route  DELETE /api/v1/bootcamps/:id
 //  @access Public
 exports.deleteBootcamp = async (req, res, next) => {
-    const bootcamp = await BootcampModel.findByIdAndDelete(req.params.id);
+    const bootcamp = await BootcampModel.findById(req.params.id);
     if (!bootcamp) {
         throw new CustomError('Delete failed!', 400);
     }
 
+    await bootcamp.remove();
     res.status(200).json({ success: true, data: {} });
 }
 

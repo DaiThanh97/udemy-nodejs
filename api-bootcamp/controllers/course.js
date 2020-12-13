@@ -8,16 +8,18 @@ const BootcampModel = require('./../models/Bootcamp');
 //  @access Public
 exports.getCourses = async (req, res, next) => {
     const { bootcampId } = req.params;
-    const condition = bootcampId ? { bootcamp: bootcampId } : {};
-    const query = CourseModel.find(condition).populate({ path: 'bootcamp', select: 'name description' }).lean();
-    const courses = await query.lean();
 
-    // Return response
-    res.status(200).json({
-        success: true,
-        count: courses.length,
-        data: courses
-    });
+    if (bootcampId) {
+        const courses = await CourseModel.find(condition).lean();
+        return res.status(200).json({
+            success: true,
+            count: courses.length,
+            data: courses
+        });
+    }
+    else {
+        res.status(200).json(res.advancedResults);
+    }
 };
 
 //  @desc   Get single course
@@ -62,5 +64,43 @@ exports.addCourse = async (req, res, next) => {
     res.status(200).json({
         success: true,
         data: course
+    });
+};
+
+//  @desc   Update course
+//  @route  PUT /api/v1/courses/:id
+//  @access Private
+exports.updateCourse = async (req, res, next) => {
+    const { id } = req.params;
+    let course = await CourseModel.findById(id).lean();
+    if (!course) {
+        throw new CustomError('No course found!', 404);
+    }
+
+    course = await CourseModel.findByIdAndUpdate(id, req.body, { new: true, runValidators: true }).lean();
+
+    // Return response
+    res.status(200).json({
+        success: true,
+        data: course
+    });
+};
+
+//  @desc   Delete course
+//  @route  DELETE /api/v1/courses/:id
+//  @access Private
+exports.deleteCourse = async (req, res, next) => {
+    const { id } = req.params;
+    const course = await CourseModel.findById(id);
+    if (!course) {
+        throw new CustomError('No course found!', 404);
+    }
+
+    await course.remove();
+
+    // Return response
+    res.status(200).json({
+        success: true,
+        data: {}
     });
 };

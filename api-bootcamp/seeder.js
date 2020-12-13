@@ -25,7 +25,7 @@ const importData = async () => {
         await Promise.all([
             BootcampModel.create(bootcamps),
             CourseModel.create(courses)
-        ])
+        ]);
         console.log("Data Imported!");
         process.exit();
     } catch (err) {

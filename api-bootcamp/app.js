@@ -1,6 +1,9 @@
+const path = require('path');
+
 require('dotenv').config();
 const express = require('express');
 const morgan = require('morgan');
+const expressFileUpload = require('express-fileupload');
 
 const connectDB = require('./configs/db');
 const bootcampRouter = require('./routes/bootcamp');
@@ -13,6 +16,8 @@ connectDB();
 
 app.use(morgan('dev'));
 app.use(express.json());
+app.use(expressFileUpload());
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Routers
 app.use('/api/v1/bootcamps', bootcampRouter);
@@ -20,7 +25,6 @@ app.use('/api/v1/courses', courseRouter);
 
 // Error handler
 app.use((err, req, res, next) => {
-    console.log(err);
     const { message, status } = err;
     res.status(status || 500).json({
         success: false,
@@ -28,4 +32,6 @@ app.use((err, req, res, next) => {
     });
 })
 
-app.listen(process.env.PORT || 5000, () => console.log(`Server is running in ${process.env.NODE_ENV} mode on port ${process.env.PORT}`));
+app.listen(process.env.PORT || 5000, () => {
+    console.log(`Server is running in ${process.env.NODE_ENV} mode on port ${process.env.PORT}`)
+});

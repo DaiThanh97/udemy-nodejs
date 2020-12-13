@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router({ mergeParams: true });
 
-const asyncHandler = require('./../middlewares/async');
+const { protect } = require('./../middlewares/auth');
 const CourseModel = require('./../models/Course');
 const advancedResults = require('./../middlewares/advancedResults');
 const {
@@ -14,14 +14,14 @@ const {
 
 router.route('/')
     .get(
-        asyncHandler(advancedResults(CourseModel, { path: 'bootcamp', select: 'name description' })),
-        asyncHandler(getCourses)
+        advancedResults(CourseModel, { path: 'bootcamp', select: 'name description' }),
+        getCourses
     )
-    .post(asyncHandler(addCourse));
+    .post(protect, addCourse);
 
 router.route('/:id')
-    .get(asyncHandler(getCourse))
-    .put(asyncHandler(updateCourse))
-    .delete(asyncHandler(deleteCourse));
+    .get(getCourse)
+    .put(protect, updateCourse)
+    .delete(protect, deleteCourse);
 
 module.exports = router;

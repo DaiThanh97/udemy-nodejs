@@ -2,19 +2,20 @@ const geocoder = require('./../utils/geocoder');
 
 const CustomError = require('../utils/customError');
 const BootcampModel = require('./../models/Bootcamp');
+const asyncHandler = require('./../middlewares/async');
 
 //  @desc   Get all bootcamps
 //  @route  GET /api/v1/bootcamps
 //  @access Public
-exports.getBootcamps = async (req, res, next) => {
+exports.getBootcamps = asyncHandler(async (req, res, next) => {
     // Return response
     res.status(200).json(res.advancedResults);
-}
+});
 
 //  @desc   Get single bootcamp
 //  @route  GET /api/v1/bootcamps/:id
 //  @access Public
-exports.getBootcamp = async (req, res, next) => {
+exports.getBootcamp = asyncHandler(async (req, res, next) => {
     const bootcamp = await BootcampModel.findById(req.params.id).lean();
     if (!bootcamp) {
         throw new CustomError('Bootcamp not found!', 404);
@@ -24,35 +25,35 @@ exports.getBootcamp = async (req, res, next) => {
         success: true,
         data: bootcamp
     });
-}
+});
 
 //  @desc   Create bootcamp
 //  @route  POST /api/v1/bootcamps
 //  @access Public
-exports.createBootcamp = async (req, res, next) => {
+exports.createBootcamp = asyncHandler(async (req, res, next) => {
     const bootcamp = await BootcampModel.create(req.body);
     res.status(201).json({
         success: true,
         data: bootcamp
     });
-}
+});
 
 //  @desc   Edit bootcamp
 //  @route  PUT /api/v1/bootcamps/:id
 //  @access Public
-exports.editBootcamp = async (req, res, next) => {
+exports.editBootcamp = asyncHandler(async (req, res, next) => {
     const bootcamp = await BootcampModel.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true }).lean();
     if (!bootcamp) {
         throw new CustomError('Update failed!', 400);
     }
 
     res.status(200).json({ success: true, data: bootcamp });
-}
+});
 
 //  @desc   Delete bootcamp
 //  @route  DELETE /api/v1/bootcamps/:id
 //  @access Public
-exports.deleteBootcamp = async (req, res, next) => {
+exports.deleteBootcamp = asyncHandler(async (req, res, next) => {
     const bootcamp = await BootcampModel.findById(req.params.id);
     if (!bootcamp) {
         throw new CustomError('Bootcamp not found!', 404);
@@ -60,12 +61,12 @@ exports.deleteBootcamp = async (req, res, next) => {
 
     await bootcamp.remove();
     res.status(200).json({ success: true, data: {} });
-}
+});
 
 //  @desc   Get bootcamps within a radius
 //  @route  GET /api/v1/bootcamps/radius/:zipcode/:distance
 //  @access Public
-exports.getBootcampsInRadius = async (req, res, next) => {
+exports.getBootcampsInRadius = asyncHandler(async (req, res, next) => {
     const { zipcode, distance } = req.params;
 
     // Get latitude / longitude from geocoder
@@ -91,12 +92,12 @@ exports.getBootcampsInRadius = async (req, res, next) => {
         count: bootcamps.length,
         data: bootcamps
     });
-}
+});
 
 //  @desc   Upload photo for bootcmap
 //  @route  PUT /api/v1/bootcamps/:id/photo
 //  @access Private
-exports.bootcampPhotoUpload = async (req, res, next) => {
+exports.bootcampPhotoUpload = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
     const bootcamp = await BootcampModel.findById(id).select('_id').lean();
     if (!bootcamp) {
@@ -136,4 +137,4 @@ exports.bootcampPhotoUpload = async (req, res, next) => {
     });
 
     console.log(file.name);
-} 
+});

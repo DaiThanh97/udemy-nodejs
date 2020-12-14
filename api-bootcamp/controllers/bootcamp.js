@@ -31,6 +31,15 @@ exports.getBootcamp = asyncHandler(async (req, res, next) => {
 //  @route  POST /api/v1/bootcamps
 //  @access Public
 exports.createBootcamp = asyncHandler(async (req, res, next) => {
+    const { _id, role } = req.user;
+    req.body.user = _id;
+
+    // Check for published bootcamp
+    const publishedBootcamp = await BootcampModel.findOne({ user: _id }).lean();
+    if (publishedBootcamp && role !== 'admin') {
+        throw new CustomError(`You've already published the bootcamp!`, 400);
+    }
+
     const bootcamp = await BootcampModel.create(req.body);
     res.status(201).json({
         success: true,
@@ -41,11 +50,20 @@ exports.createBootcamp = asyncHandler(async (req, res, next) => {
 //  @desc   Edit bootcamp
 //  @route  PUT /api/v1/bootcamps/:id
 //  @access Public
-exports.editBootcamp = asyncHandler(async (req, res, next) => {
-    const bootcamp = await BootcampModel.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true }).lean();
+exports.updateBootcamp = asyncHandler(async (req, res, next) => {
+    const { id } = req.params;
+    let bootcamp = await BootcampModel.findById(id).lean();
     if (!bootcamp) {
-        throw new CustomError('Update failed!', 400);
+        throw new CustomError('Bootcamp not found!', 404);
     }
+
+    // Check permission
+    if (bootcamp.user.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
+        throw new CustomError('You are not authorized to update bootcamp', 401);
+    }
+
+    // Update
+    bootcamp = await BootcampModel.findByIdAndUpdate(id, req.body, { new: true, runValidators: true }).lean();
 
     res.status(200).json({ success: true, data: bootcamp });
 });
@@ -57,6 +75,11 @@ exports.deleteBootcamp = asyncHandler(async (req, res, next) => {
     const bootcamp = await BootcampModel.findById(req.params.id);
     if (!bootcamp) {
         throw new CustomError('Bootcamp not found!', 404);
+    }
+
+    // Check permission
+    if (bootcamp.user.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
+        throw new CustomError('You are not authorized to delete bootcamp', 401);
     }
 
     await bootcamp.remove();
@@ -104,6 +127,11 @@ exports.bootcampPhotoUpload = asyncHandler(async (req, res, next) => {
         throw new CustomError('Bootcamp not found!', 404);
     }
 
+    // Check permission
+    if (bootcamp.user.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
+        throw new CustomError('You are not authorized to update bootcamp', 401);
+    }
+
     if (!req.files) {
         throw new CustomError('Please upload a file!', 400);
     }
@@ -135,6 +163,4 @@ exports.bootcampPhotoUpload = asyncHandler(async (req, res, next) => {
             data: file.name
         });
     });
-
-    console.log(file.name);
 });

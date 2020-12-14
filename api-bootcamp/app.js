@@ -5,6 +5,12 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const morgan = require('morgan');
 const expressFileUpload = require('express-fileupload');
+// Security, prevent attack
+const helmet = require('helmet');
+const expressMongoSanitize = require('express-mongo-sanitize');
+const xssClean = require('xss-clean');
+const rateLimit = require('express-rate-limit');
+const hpp = require('hpp');
 
 const connectDB = require('./configs/db');
 const bootcampRouter = require('./routes/bootcamp');
@@ -21,6 +27,26 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(expressFileUpload());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// Prevent MongoDB Injection
+// Sanitize data
+app.use(expressMongoSanitize());
+
+// Add headers for security
+app.use(helmet());
+
+// Prevent XSS attack
+app.use(xssClean());
+
+// Rate limit
+const limiter = rateLimit({
+    windowMs: 10 * 60 * 1000, // 10 minutes in miliseconds
+    max: 100
+});
+app.use(limiter);
+
+// Prevent http params polution
+app.use(hpp());
 
 // Routers
 app.use('/api/v1/bootcamps', bootcampRouter);

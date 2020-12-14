@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { protect } = require('./../middlewares/auth');
+const { protect, authorize } = require('./../middlewares/auth');
 const BootcampModel = require('./../models/Bootcamp');
 const advancedResults = require('./../middlewares/advancedResults');
 const courseRouter = require('./course');
@@ -9,7 +9,7 @@ const {
     getBootcamps,
     getBootcamp,
     createBootcamp,
-    editBootcamp,
+    updateBootcamp,
     deleteBootcamp,
     getBootcampsInRadius,
     bootcampPhotoUpload
@@ -20,15 +20,15 @@ router.use('/:bootcampId/courses', courseRouter);
 
 router.route('/')
     .get(advancedResults(BootcampModel, 'courses'), getBootcamps)
-    .post(protect, createBootcamp);
+    .post(protect, authorize('publisher', 'admin'), createBootcamp);
 
 router.route('/:id')
     .get(getBootcamp)
-    .put(protect, editBootcamp)
-    .delete(protect, deleteBootcamp);
+    .put(protect, authorize('publisher', 'admin'), updateBootcamp)
+    .delete(protect, authorize('publisher', 'admin'), deleteBootcamp);
 
 router.route('/:id/photo')
-    .put(protect, bootcampPhotoUpload);
+    .put(protect, authorize('publisher', 'admin'), bootcampPhotoUpload);
 
 // Find all bootcamp within the distance
 router.get('/radius/:zipcode/:distance', getBootcampsInRadius);

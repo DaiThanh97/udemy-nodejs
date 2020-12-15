@@ -1,0 +1,96 @@
+#chat {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+}
+
+#chat .side-bar {}
+
+#chat .side-bar .side-bar__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#chat .top_controls button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    margin: 0 2px;
+    transition: all 0.5s;
+}
+
+#chat .top_controls button:hover {
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
+.side-bar #search {
+    border: none;
+    background-color: rgba(0, 0, 0, 0.05);
+    padding: 5px 20px;
+    border-radius: 20px;
+    width: 100%;
+    margin: 10px 0;
+}
+
+.side-bar #search:focus {
+    outline: none;
+}
+
+.side-bar .list-friend .chatbox {
+    display: flex;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.025);
+    border-radius: 10px;
+    padding: 10px;
+    margin: 5px 0;
+}
+
+.side-bar .list-friend .chatbox .info {
+    margin-left: 10px;
+}
+
+.side-bar .list-friend .chatbox .info .name {
+    font-size: 15px;
+}
+
+.side-bar .list-friend .chatbox .info .message {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.side-bar .list-friend .chatbox .info .time {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+.side-bar .list-friend .chatbox .avatar img{
+    border-radius: 50%;
+    width: 60px;
+}
+
+/*  */
+#chat .chat-content .chat-content__top {
+    display: flex;
+    align-items: center;
+}
+
+#chat .chat-content .chat-content__top .avatar img {
+    border-radius: 50%;
+    width: 45px;
+}
+
+#chat .chat-content .chat-content__top {
+    padding: 0 40px;
+    box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.25);
+}
+
+#chat .chat-content .chat-content__top .info .name{
+    font-weight: bold;
+}
+
+#chat .chat-content .chat-content__top .info .time {
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.5);
+}

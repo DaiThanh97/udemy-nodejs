@@ -1,0 +1,83 @@
+#card {
+    border-radius: 15px;
+    box-shadow: 0 4px 15px 0 rgba(0, 0, 0, 0.25);
+}
+
+#email {
+    border-color: transparent;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    background-color: rgba(0, 0, 0, 0.075);
+    padding: 20px;
+    font-weight: 500;
+}
+
+#email:focus {
+    box-shadow: none;
+}
+
+#password {
+    border-color: transparent;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    background-color: rgba(0, 0, 0, 0.075);
+    padding: 20px;
+    font-weight: 500;
+}
+
+#password:focus {
+    box-shadow: none;
+}
+
+.btn-login {
+    border-radius: 15px;
+    outline: none;
+    border: none;
+    width: 100%;
+    padding: 10px;
+    font-weight: bold;
+    background-color: #1877f2;
+    color: white;
+    transition: all 0.5s;
+}
+
+.btn-login:focus {
+    outline: none;
+}
+
+.btn-login:hover {
+    background-color: #1d69cc;
+}
+
+.btn-register {
+    border-radius: 15px;
+    outline: none;
+    border: none;
+    width: 100%;
+    padding: 10px;
+    font-weight: bold;
+    margin-top: 10px;
+    transition: all 0.5s;
+}
+
+.btn-register:focus {
+    outline: none;
+}
+
+.btn-register:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+#checkbox {
+    border-radius: 50%;
+}
+
+.lbSaveInfo {
+    color: rgba(0, 0, 0, 0.4);
+    font-weight: 600;
+}
+
+.forgotpassword {
+    color: black;
+    font-weight: 500;
+}

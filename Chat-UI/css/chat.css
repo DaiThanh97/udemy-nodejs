@@ -1,10 +1,35 @@
-#chat {
-    display: flex;
-    justify-content: space-between;
-    align-items: stretch;
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+  
+/* Track */
+::-webkit-scrollbar-track {
+    background: transparent; 
+}
+   
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.2); 
+    border-radius: 10px;
+}
+  
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.2); 
 }
 
-#chat .side-bar {}
+
+#chat .side-bar {
+    border-right: 1px solid rgba(0, 0, 0, 0.15);
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 360px;
+    padding: 10px 5px;
+    z-index: 10;
+}
 
 #chat .side-bar .side-bar__top {
     display: flex;
@@ -28,7 +53,7 @@
 .side-bar #search {
     border: none;
     background-color: rgba(0, 0, 0, 0.05);
-    padding: 5px 20px;
+    padding: 7px 20px;
     border-radius: 20px;
     width: 100%;
     margin: 10px 0;
@@ -38,13 +63,23 @@
     outline: none;
 }
 
+.side-bar .list-friend {
+    height: 100%;
+    overflow-y: auto;
+    padding-bottom: 30px;
+    padding-right: 5px;
+}
+
 .side-bar .list-friend .chatbox {
     display: flex;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.025);
     border-radius: 10px;
     padding: 10px;
     margin: 5px 0;
+}
+
+.side-bar .list-friend .chatbox.active {
+    background-color: rgba(234, 243, 255, 1);
 }
 
 .side-bar .list-friend .chatbox .info {
@@ -71,7 +106,17 @@
 }
 
 /*  */
+#chat .chat-content {
+    margin-left: 360px;
+    margin-right: 360px;
+}
+
 #chat .chat-content .chat-content__top {
+    position: fixed;
+    top: 0;
+    left: 360px;
+    right: 0;
+    height: 70px;
     display: flex;
     align-items: center;
 }
@@ -82,8 +127,8 @@
 }
 
 #chat .chat-content .chat-content__top {
-    padding: 0 40px;
-    box-shadow: 0 20px 20px 0 rgba(0, 0, 0, 0.25);
+    padding: 10px 20px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.075);
 }
 
 #chat .chat-content .chat-content__top .info .name{
@@ -93,4 +138,114 @@
 #chat .chat-content .chat-content__top .info .time {
     font-size: 14px;
     color: rgba(0, 0, 0, 0.5);
+}
+
+#chat .chat-content .chat-content__body .chat-area {
+    position: fixed;
+    top: 70px;
+    left: 360px;
+    right: 0;
+    bottom: 60px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column-reverse;
+    padding: 0 20px 10px;
+}
+
+#message {
+    border-radius: 20px;
+    background-color: #0084ff;
+    color: white;
+    padding: 5px 15px;
+    margin: 5px 0;
+    align-self: end;
+}
+
+#chat .chat-content .chat-content__body .chat-area .message-friend {
+    display: flex;
+    align-items: center;
+}
+
+#chat .chat-content .chat-content__body .chat-area .message-friend img {
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+}
+
+#chat .chat-content .chat-content__body .chat-area .their {
+    background-color:#e4e6eb;
+    color: black;
+}
+
+#chat .chat-content .chat-content__bot {
+    position: fixed;
+    bottom: 0;
+    left: 360px;
+    right: 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+}
+
+#chat .chat-content .chat-content__bot #type-message {
+    border: none;
+    background-color: rgba(0, 0, 0, 0.075);
+    padding: 7px 20px;
+    border-radius: 20px;
+    width: 100%;
+}
+
+#chat .chat-content .chat-content__bot #type-message:focus {
+    outline: none;
+}
+
+#chat .chat-content .chat-content__bot button {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: none;
+    margin: 0 2px;
+    transition: all 0.5s;
+}
+
+#chat .chat-content .chat-content__bot button:hover {
+    background-color: rgba(0, 0, 0, 0.25);
+}
+
+#chat .chat-content .chat-content__bot button:focus {
+    outline: none;
+}
+
+/*  */
+#chat .right-bar {
+    border-left: 1px solid rgba(0, 0, 0, 0.15);
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 360px;
+    padding: 10px 10px;
+}
+
+.btn-setting {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    border-radius: 50%;
+    border: none;
+    width: 50px;
+    height: 50px;
+    font-size: 25px;
+    z-index: 50;
+    background-color: rgba(0, 0, 0, 0.1);
+    transition: all 0.5s;
+}
+
+.btn-setting:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.btn-setting:focus {
+    outline: none;
 }

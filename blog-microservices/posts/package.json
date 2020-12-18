@@ -1,0 +1,17 @@
+{
+  "name": "posts",
+  "version": "1.0.0",
+  "description": "Post microservices",
+  "main": "app.js",
+  "scripts": {
+    "start": "SET NODE_ENV=production && node app.js",
+    "dev": "nodemon app.js"
+  },
+  "author": "Tio Nguyen",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1"
+  }
+}

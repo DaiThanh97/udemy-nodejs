@@ -1,0 +1,20 @@
+{
+  "name": "ws-chat",
+  "version": "1.0.0",
+  "description": "Source ws for chat",
+  "main": "app.js",
+  "scripts": {
+    "start": "SET NODE_ENV=production && node app.js",
+    "dev": "nodemon app.js"
+  },
+  "author": "Tio Nguyen",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.11.8",
+    "socket.io": "^3.0.4",
+    "socketio-jwt": "^4.6.2"
+  }
+}

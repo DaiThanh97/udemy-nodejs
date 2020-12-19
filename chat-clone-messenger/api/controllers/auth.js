@@ -54,10 +54,10 @@ exports.logIn = async (req, res, next) => {
 
     // Gen jwt token
     const token = jwt.sign({
-        userId: user._id
-    }, process.env.JWT_SECRET, {
-        expiresIn: process.env.JWT_EXPIRE
-    });
+        userId: user._id,
+        nick: user.nick,
+        avatar: user.avatar
+    }, process.env.JWT_SECRET, {});
 
     // Return response
     res.status(200)

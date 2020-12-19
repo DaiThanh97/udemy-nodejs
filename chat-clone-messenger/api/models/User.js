@@ -16,6 +16,10 @@ const UserSchema = new mongoose.Schema({
     avatar: {
         type: String,
         default: 'no-image.jpg',
+    },
+    block: {
+        type: Boolean,
+        default: false
     }
 });
 

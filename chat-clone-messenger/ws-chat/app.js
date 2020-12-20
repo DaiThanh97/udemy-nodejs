@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 
 const connectDB = require('./configs/db');
-const socketService = require('./controllers/socketio');
+const socketio = require('./controllers/socketio');
 
 const app = express();
 app.use(cors());
@@ -11,7 +11,7 @@ app.use(cors());
 connectDB();
 
 // init socketio
-socketService.init(
+socketio.init(
     app.listen(process.env.PORT || 5001, () => {
         console.log(`Server is running in ${process.env.NODE_ENV} mode in port ${process.env.PORT}`);
     })

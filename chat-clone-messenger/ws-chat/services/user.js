@@ -1,18 +1,27 @@
-const UserModel = require('./../models/User');
+const jwt = require('jsonwebtoken');
 
-exports.getUser = async ({ userId, nick, avatar }) => {
+const UserModel = require('./../models/User');
+const Response = require('./../utils/response');
+const CustomError = require('./../utils/customError');
+
+exports.checkAuthen = (token) => {
+    let decodeUser;
     try {
-        // Check if user exists
-        let user = await UserModel.findOne({ userId });
-        // console.log("USERRR: ", user);
-        if (user) {
-            return user;
+        decodeUser = jwt.verify(token, process.env.JWT_SECRET);
+        if (!decodeUser) {
+            throw new CustomError('Invalid Token!', 401);
         }
 
-        user = await UserModel.create({ userId, nick, avatar });
-        return user;
-    } catch (err) {
-        console.log(err);
-        return null;
+        // Check if user exists
+        const { userId } = decodeUser;
+        let user = await UserModel.findOne({ userId });
+        if (user) {
+            throw new CustomError('User not found!', 404);
+        }
+
+        return await UserModel.create({ userId, nick, avatar });
     }
-};
+    catch (err) {
+        return err;
+    }
+}

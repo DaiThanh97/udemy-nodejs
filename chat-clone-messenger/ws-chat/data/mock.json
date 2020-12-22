@@ -1,0 +1,14 @@
+[
+    {
+        "action": "LOGIN",
+        "data": {
+            "username": "",
+            "pass": ""
+        }
+    },
+    {
+        "status": 200,
+        "message": "a",
+        "data": {}
+    }
+]

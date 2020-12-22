@@ -8,7 +8,6 @@ module.exports = async () => {
             useFindAndModify: false,
             useCreateIndex: true
         });
-        console.log("Connected DB");
     } catch (err) {
         console.log("Connected DB Failed!");
     }

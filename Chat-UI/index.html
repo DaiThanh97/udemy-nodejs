@@ -11,35 +11,118 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css"
+        integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
+        crossorigin="anonymous" />
+
     <link rel="stylesheet" href="./css/style.css">
 </head>
 
 <body>
 
-    <!-- Form Login -->
-    <section class="container">
-        <div id="card" class="card w-50 mx-auto mt-5">
-            <div class="card-body">
-                <div class="text-center">
-                    <img src="./images/messenger-icon.png" width="200" alt="">
+    <section id="chat">
+        <div class="side-bar">
+            <div class="side-bar__top">
+                <div class="logo">
+                    <img class="" src="./images/skype-logo.png" width="150" alt="">
                 </div>
-                <h2 class="card-title text-center my-4">Messenger</h2>
-                <form action="" class="w-75 mx-auto">
-                    <input id="username" type="text" class="form-control" placeholder="Email or phone number">
-                    <input id="password" type="password" class="form-control" placeholder="Password">
-                    <div class="my-3 p-0">
-                        <input type="checkbox" id="checkbox">
-                        <label class="lbSaveInfo ml-1">Save credentials</label>
+            </div>
+            <div class="d-flex justify-content-center">
+                <input id="search" type="text" placeholder="Search...">
+            </div>
+            <div class="list-friend mt-3">
+                <div class="chatbox">
+                    <div class="avatar">
+                        <img src="./images/avatar.jpg" alt="">
                     </div>
-                    <div class="my-3 text-center">
-                        <button type="submit" class="btn-login">Login</button>
-                        <button type="submit" class="btn-register mb-5">Create New Account</button>
-                        <a class="forgotpassword" href="">Forgot your password?</a>
+                    <div class="info">
+                        <div>
+                            <h1 class="d-block name">Tio Nguyen</h1>
+                            <span class="message">Hello</span>
+                        </div>
+                        <span class="time">3h</span>
                     </div>
-                </form>
+                </div>
+                <div class="chatbox">
+                    <div class="avatar">
+                        <img src="./images/avatar3.jpg" alt="">
+                    </div>
+                    <div class="info">
+                        <div>
+                            <h1 class="d-block name">La Van Tien</h1>
+                            <span class="message">Mai di ku :)</span>
+                        </div>
+                        <span class="time">21m</span>
+                    </div>
+                </div>
+                <div class="chatbox active">
+                    <div class="avatar">
+                        <img src="./images/avatar2.jpg" alt="">
+                    </div>
+                    <div class="info">
+                        <div>
+                            <h1 class="d-block name">Trung Nguyen</h1>
+                            <span class="message">Sáng đi học ko m</span>
+                        </div>
+                        <span class="time">1d</span>
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="chat-content">
+            <div class="chat-content__top">
+                <div class="info ml-2">
+                    <h2 class="d-block mb-0 name">Trung Nguyen</h2>
+                    <span class="time">Active 21 minutes ago</span>
+                </div>
+                <div class="controls">
+                    <button><i class="fas fa-ellipsis-h"></i></button>
+                    <button><i class="fas fa-video"></i></button>
+                </div>
+            </div>
+            <div class="chat-content__body">
+                <div class="chat-area">
+                    <div class="message-me">
+                        <div class="message-me__content">
+                            <img class="mr-2" src="./images/avatar2.jpg" alt="">
+                            <div id="message" class="mr-auto">
+                                Dag lam ji ?
+                                <div class="time">
+                                    2:10
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="message-friend">
+                        <img class="mr-2" src="./images/avatar3.jpg" alt="">
+                        <div id="message" class="their mr-auto">
+                            Dag chich
+                            <div class="time-friend">
+                                2:10
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="chat-content__bot">
+                <input id="type-message" type="text" placeholder="Type your message here...">
+                <button class="mx-2"><i class="fas fa-paper-plane"></i></button>
+            </div>
+        </div>
+        <!-- <div class="right-bar">
+            <div class="right-bar__top">
+                <div class="logo">
+                    <img src="./images/fb_logo.png" alt="">
+                </div>
+                <div class="top_controls">
+                    <button><i class="fas fa-ellipsis-h"></i></button>
+                    <button><i class="fas fa-video"></i></button>
+                    <button><i class="fas fa-edit"></i></button>
+                </div>
+            </div>
+        </div> -->
     </section>
+
 
 
     <!-- Optional JavaScript -->
@@ -54,8 +137,8 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 
-        <script src="http://localhost:5001/socket.io/socket.io.js"></script>
-        <script src="./js/main.js"></script>
+    <script src="http://localhost:5001/socket.io/socket.io.js"></script>
+    <script src="./js/main.js"></script>
 </body>
 
 </html>

@@ -42,7 +42,7 @@ app.post('/posts/:id/comments', async (req, res, next) => {
             status: 'pending'
         }
     };
-    await axios.post('http://localhost:4005/events', event);
+    await axios.post('http://event-bus-srv:4005/events', event);
 
     res.status(201).json({
         cmt
@@ -60,7 +60,7 @@ app.post('/events', async (req, res, next) => {
         const cmt = comments.find(c => c.id === id);
         cmt.status = status;
 
-        await axios.post('http://localhost:4005/events', {
+        await axios.post('http://event-bus-srv:4005/events', {
             type: 'CommentUpdated',
             data: cmt
         });

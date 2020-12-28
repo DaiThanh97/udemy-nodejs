@@ -10,7 +10,7 @@ export default class CommentCreate extends Component {
     onSendComment = async () => {
         const { content } = this.state;
         const { postId } = this.props;
-        await axios.post(`http://localhost:4001/posts/${postId}/comments`, {
+        await axios.post(`http://posts.com/posts/${postId}/comments`, {
             content
         });
 

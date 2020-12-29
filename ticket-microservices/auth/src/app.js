@@ -6,12 +6,8 @@ const app = express();
 
 app.use(express.json());
 
-app.get('/', (req, res, next) => {
-    res.send("Hi there!");
-})
+app.use('/api/users', authRoute);
 
-// app.use(authRoute);
-
-app.listen(4000, () => {
-    console.log('Listening on port 4000!');
+app.listen(3000, () => {
+    console.log('Listening on port 3000!');
 })

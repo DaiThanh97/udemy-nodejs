@@ -4,7 +4,7 @@
   "description": "Post microservices",
   "main": "app.js",
   "scripts": {
-    "start": "NODE_ENV=production node app.js",
+    "start": "nodemon app.js",
     "dev": "nodemon app.js"
   },
   "author": "Tio Nguyen",
@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^0.21.0",
     "cors": "^2.8.5",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "nodemon": "^2.0.6"
   }
 }

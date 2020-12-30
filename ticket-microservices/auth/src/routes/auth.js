@@ -1,20 +1,23 @@
 const express = require('express');
 const router = express.Router();
 
-router.post('/signin', (req, res, next) => {
-    res.send('Hello world!');
-});
+const { Validate, Handle } = require('./../validations/auth');
+const { signUp, logIn, signOut, currentUser } = require('./../controllers/auth');
 
-router.post('/signup', (req, res, next) => {
-    res.send('Hello world!');
-});
+router.post('/logIn',
+    Validate.logIn,
+    Handle.logIn,
+    logIn
+);
 
-router.post('/signout', (req, res, next) => {
-    res.send('Hello world!');
-});
+router.post('/signUp',
+    Validate.signUp,
+    Handle.signUp,
+    signUp
+);
 
-router.get('/currentUser', (req, res, next) => {
-    res.send('Hello world!');
-});
+router.post('/signOut', signOut);
+
+router.get('/currentUser', currentUser);
 
 module.exports = router;

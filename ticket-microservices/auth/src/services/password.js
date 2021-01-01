@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 
 exports.hash = async password => {
-    return await bcrypt.hash(password, process.env.SALT);
+    return await bcrypt.hash(password, parseInt(process.env.SALT));
 }
 
 exports.check = async (password, pwHash) => {

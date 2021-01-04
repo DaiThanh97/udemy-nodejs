@@ -71,8 +71,7 @@ exports.signOut = asyncHandler(async (req, res, next) => {
 exports.currentUser = asyncHandler(async (req, res, next) => {
     const { token } = req.cookies;
     if (!token) {
-        // throw new CustomError(StatusCode.UNAUTHENTICATED, 'Not authenticated!');
-        throw new CustomError(StatusCode.SUCCESS, 'Not authenticated!');
+        throw new CustomError(StatusCode.UNAUTHENTICATED, 'Not authenticated!');
     }
 
     const payload = jwtService.verify(token);

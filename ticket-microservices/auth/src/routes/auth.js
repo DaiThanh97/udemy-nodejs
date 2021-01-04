@@ -1,18 +1,19 @@
 const express = require('express');
 const router = express.Router();
 
-const { Validate, Handle } = require('./../validations/auth');
+const validate = require('./../validations/auth');
 const { signUp, logIn, signOut, currentUser } = require('./../controllers/auth');
+const { validateRequest } = require('@tioticket/common');
 
 router.post('/logIn',
-    Validate.logIn,
-    Handle.logIn,
+    validate.logIn,
+    validateRequest,
     logIn
 );
 
 router.post('/signUp',
-    Validate.signUp,
-    Handle.signUp,
+    validate.signUp,
+    validateRequest,
     signUp
 );
 

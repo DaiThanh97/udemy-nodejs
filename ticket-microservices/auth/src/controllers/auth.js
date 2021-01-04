@@ -1,6 +1,8 @@
-const asyncHandler = require('./../middlewares/async');
-const StatusCode = require('../configs/statusCode');
-const { CustomError, Response } = require('../utils/response');
+const {
+    asyncHandler,
+    StatusCode,
+    Entity: { CustomError, Response }
+} = require('@tioticket/common');
 const UserModel = require('./../models/User');
 const jwtService = require('./../services/jwt');
 const passwordService = require('./../services/password');

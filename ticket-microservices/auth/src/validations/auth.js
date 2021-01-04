@@ -1,7 +1,9 @@
 const { check, validationResult } = require('express-validator');
 
-const { CustomError } = require('../utils/response');
-const StatusCode = require('../configs/statusCode');
+const {
+    StatusCode,
+    Entity: { CustomError }
+} = require('@tioticket/common');
 
 const Validate = {
     signUp: [

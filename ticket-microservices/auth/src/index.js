@@ -2,9 +2,11 @@ require('dotenv').config();
 const express = require('express');
 const cookieParser = require('cookie-parser');
 
+const {
+    errorHandler,
+    Entity: { CustomError }
+} = require('@tioticket/common');
 const authRoute = require('./routes/auth');
-const { errorHandler } = require('./middlewares/error');
-const { CustomError } = require('./utils/response');
 
 const app = express();
 app.set('trust proxy', true);

@@ -1,5 +1,6 @@
 const nats = require('node-nats-streaming');
 const crypto = require('crypto');
+const TicketCreatedListener = require('./events/ticket-created-listener');
 
 console.clear();
 
@@ -15,22 +16,8 @@ stan.on('connect', () => {
         process.exit();
     });
 
-    // Options for subscription
-    const options = stan.subscriptionOptions().setManualAckMode(true);
-
-    // Subscribe to a channel
-    const subscription = stan.subscribe(
-        'ticket:created',
-        'orders-service-queue-group',
-        options
-    );
-
-    subscription.on('message', (msg) => {
-        const data = msg.getData();
-        console.log('Receive: ', data);
-
-        msg.ack();
-    });
+    const listener = new TicketCreatedListener(stan);
+    listener.listen();
 });
 
 // Watch for INTERUPT SIGNAL

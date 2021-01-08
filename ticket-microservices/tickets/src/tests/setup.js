@@ -21,6 +21,7 @@ beforeAll(async () => {
 // Hook function
 // Run before each test start
 beforeEach(async () => {
+    jest.clearAllMocks();
     const collections = await mongoose.connection.db.collections();
     for (let collection of collections) {
         await collection.deleteMany({});
@@ -35,7 +36,7 @@ afterAll(async () => {
 
 // Global function
 global.logIn = () => {
-    return "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmZjE2ZDgwMGYwNWQ4MDAzM2ZkM2MzNSIsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImlhdCI6MTYwOTY1NzczNywiZXhwIjoxNjA5NzQ0MTM3fQ.6Pm4ctN2YcFmFFJRKOKZh68uLrObOlu_q6Jtl7tu6OI";
+    return "token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVmZjUyZTI1NGZmYzRjMDAxZjVhYjJlMyIsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsImlhdCI6MTYwOTkwMzY1NywiZXhwIjoxNjA5OTkwMDU3fQ.OD-4e-ShIqRTD-eoWVL7D4_BrbIVobeofDRY6IuRBHk";
 };
 
 global.secondUser = () => {

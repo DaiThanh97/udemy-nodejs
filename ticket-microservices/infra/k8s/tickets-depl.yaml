@@ -16,8 +16,10 @@ spec:
         - name: tickets
           image: tionguyen97/tickets
           env: 
-            - name: MONGO_URI
-              value: 'mongodb://tickets-mongo-srv:27017/ticket'
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
             - name: JWT_KEY
               valueFrom:
                 secretKeyRef:

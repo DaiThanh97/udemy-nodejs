@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cookieParser = require('cookie-parser');
 
@@ -6,7 +7,6 @@ const {
     StatusCode,
     Entity: { CustomError }
 } = require('@tioticket/common');
-const connectDB = require('./configs/db');
 const ticketRoute = require('./routes/tickets');
 
 const app = express();
@@ -24,12 +24,5 @@ app.use((req, res, next) => {
 
 // Error Handler
 app.use(errorHandler);
-
-// Connect to DB
-connectDB(() => {
-    app.listen(3000, () => {
-        console.log('Tickets Service is listening on port 3000!');
-    });
-});
 
 module.exports = app;

@@ -2,9 +2,9 @@
   "name": "auth",
   "version": "1.0.0",
   "description": "Authenticated",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "start": "nodemon src/app.js",
+    "start": "nodemon src/index.js",
     "test": "jest --watchAll --no-cache"
   },
   "jest": {

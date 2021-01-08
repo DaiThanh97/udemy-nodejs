@@ -10,6 +10,7 @@ class Publisher {
                 if (err) {
                     return reject(err);
                 }
+                console.log("Event published to ", this.subject);
                 resolve();
             });
         });

@@ -4,6 +4,8 @@ const {
     Entity: { Response, CustomError }
 } = require('@tioticket/common');
 const Ticket = require('./../models/Ticket');
+const { TicketCreatedPublisher, TicketUpdatedPublisher } = require('../events/publisher/ticket.publisher');
+const natsWrapper = require('./../nats-wrapper');
 
 // @desc    Create new ticket
 // @route   POST /api/tickets
@@ -17,6 +19,15 @@ exports.createTicket = asyncHandler(async (req, res, next) => {
         userId: req.currentUser.id
     });
     await ticket.save();
+
+    // Publish event 
+    await new TicketCreatedPublisher(natsWrapper.getClient()).publish({
+        id: ticket.id,
+        title: ticket.title,
+        price: ticket.price,
+        userId: ticket.userId,
+        version: ticket.version
+    });
 
     // Response
     res.status(StatusCode.CREATED)
@@ -54,9 +65,14 @@ exports.getTickets = asyncHandler(async (req, res, next) => {
 // @access  PRIVATE
 exports.updateTicket = asyncHandler(async (req, res, next) => {
     const { id } = req.params;
-    let ticket = await Ticket.findById(id);
+    const ticket = await Ticket.findById(id);
     if (!ticket) {
         throw new CustomError(StatusCode.NOT_FOUND, 'Ticket not found!');
+    }
+
+    // Check locked down ticket
+    if (ticket.orderId) {
+        throw new CustomError(StatusCode.BAD_REQUEST, 'Cannot edit a reserved ticket!');
     }
 
     // Check authorized
@@ -68,6 +84,15 @@ exports.updateTicket = asyncHandler(async (req, res, next) => {
     ticket.title = title;
     ticket.price = price;
     await ticket.save();
+
+    // Publish event 
+    new TicketUpdatedPublisher(natsWrapper.getClient()).publish({
+        id: ticket.id,
+        title: ticket.title,
+        price: ticket.price,
+        userId: ticket.userId,
+        version: ticket.version
+    });
 
     // Response
     res.status(StatusCode.SUCCESS)

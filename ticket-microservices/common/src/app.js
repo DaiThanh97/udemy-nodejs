@@ -6,6 +6,7 @@ exports.validateRequest = require('./middlewares/validateRequest');
 
 // Configs
 exports.StatusCode = require('./configs/statusCode');
+exports.OrderStatus = require('./configs/orderStatus');
 
 // Entities
 exports.Entity = require('./utils/response');

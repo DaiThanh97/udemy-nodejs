@@ -2,9 +2,9 @@
   "name": "tickets",
   "version": "1.0.0",
   "description": "Ticket service",
-  "main": "app.js",
+  "main": "index.js",
   "scripts": {
-    "start": "nodemon src/app.js",
+    "start": "nodemon src/index.js",
     "test": "jest --watchAll --no-cache"
   },
   "jest": {
@@ -16,12 +16,15 @@
   "author": "Tio",
   "license": "ISC",
   "dependencies": {
+    "@tioticket/common": "^1.1.20",
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-validator": "^6.9.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.11.9",
+    "mongoose-update-if-current": "^1.4.0",
+    "node-nats-streaming": "^0.3.2",
     "nodemon": "^2.0.6"
   },
   "devDependencies": {

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const { updateIfCurrentPlugin } = require('mongoose-update-if-current');
 
 const TicketSchema = new mongoose.Schema({
     title: {
@@ -12,6 +13,9 @@ const TicketSchema = new mongoose.Schema({
     userId: {
         type: String,
         required: true
+    },
+    orderId: {
+        type: String,
     }
 }, {
     toJSON: {
@@ -21,5 +25,7 @@ const TicketSchema = new mongoose.Schema({
         }
     }
 });
+TicketSchema.set('versionKey', 'version');
+TicketSchema.plugin(updateIfCurrentPlugin);
 
 module.exports = mongoose.model('Ticket', TicketSchema);

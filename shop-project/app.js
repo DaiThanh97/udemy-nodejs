@@ -16,14 +16,6 @@ const flash = require('connect-flash');
 const multer = require('multer');
 const redis = require('redis');
 const RedisStore = require('connect-redis')(session);
-const redisClient = redis.createClient(
-	process.env.REDIS_PORT,
-	process.env.REDIS_HOST,
-	{
-		auth_pass: process.env.REDIS_PASS,
-		db: process.env.REDIS_DB_SESSION
-	}
-);
 
 // Define Self
 const shopRouter = require('./routes/shop');
@@ -73,7 +65,6 @@ app.use(session({
 	// 	uri: configs.DB_CONNECT_STR,
 	// 	collection: 'sessions',
 	// }),
-	store: new RedisStore({ client: redisClient }),
 }));
 // Init csrf middleware
 app.use(csrf());

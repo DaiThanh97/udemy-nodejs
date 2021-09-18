@@ -26,7 +26,7 @@ const fileFilter = (req, file, cb) => {
 }
 
 module.exports = {
-    DB_CONNECT_STR: `mongodb+srv://${DB_USER}:${DB_PASS}@demo-cluster.xhssr.mongodb.net/${DB_TEST}?retryWrites=true&w=majority`,
+    DB_CONNECT_STR: `mongodb://tio-user:lpJmU1XG4YfvW6TD@demo-cluster-shard-00-00.xhssr.mongodb.net:27017,demo-cluster-shard-00-01.xhssr.mongodb.net:27017,demo-cluster-shard-00-02.xhssr.mongodb.net:27017/${DB_TEST}?ssl=true&replicaSet=atlas-dk59dk-shard-0&authSource=admin&retryWrites=true&w=majority`,
     MULTER_DISK_STORAGE: fileStorage,
     MULTER_FILE_FILTER: fileFilter,
 }
